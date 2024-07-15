@@ -1,3 +1,5 @@
+from typing import Union
+
 from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from slowapi.errors import RateLimitExceeded
@@ -20,7 +22,7 @@ async def get_answer(prompt: str) -> dict:
     response = gemini(prompt)
     lender = Lender(response)
 
-    return lender.parse_all(raw=True)
+    return lender.parse_all()
 
 
 @app.get("/api/physics")

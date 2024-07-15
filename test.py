@@ -1,5 +1,7 @@
+import json
+
 from modules import Physics, Chemistry, Biology, Earth
-from modules import Gemini
+from modules import Gemini, Lender
 
 ph = Physics()
 ch = Chemistry()
@@ -9,9 +11,12 @@ er = Earth()
 
 def solve(pt):
     bard = Gemini("gemini-1.5-flash")
+    response = bard(pt)
+    lender = Lender(response)
     print(pt)
     print("===" * 8)
-    print(bard(pt))
+    problems = lender.parse_all()
+    print(json.dumps(problems, ensure_ascii=False))
 
 
 pts = [

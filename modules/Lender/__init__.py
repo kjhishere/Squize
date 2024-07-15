@@ -17,8 +17,27 @@ class Lender:
 
     def parse_problem(self, problem: str) -> dict:
         soup = Soup(problem, "html.parser")
+        
+        h2 = soup.find_all('h2')
+        h3 = soup.find_all('h3')
+        
+        titles = h2
+        if titles == []:
+            titles = h3
+        else:
+            titles = [*h2, *h3]
+        
+
+        title = titles[0].text
+        try:
+            detail = '\n'.join([detail.text for detail in titles[1:]])
+        except:
+            detail = ''
+        
         return {
-            "title": soup.find("h3").text,
+            "title": title,
+            "detail": detail,
+            "body": [body.text for body in soup.find_all('p')],
             "choices": [
                 f"{idx + 1}. {li.text}" for idx, li in enumerate(soup.find_all("li"))
             ],
