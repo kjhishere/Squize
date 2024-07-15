@@ -8,7 +8,7 @@ er = Earth()
 
 
 def solve(pt):
-    bard = Gemini()
+    bard = Gemini("gemini-1.5-flash")
     print(pt)
     print("===" * 8)
     print(bard(pt))

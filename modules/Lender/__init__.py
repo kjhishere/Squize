@@ -26,10 +26,12 @@ class Lender:
 
     def parse_explain(self, explain: str) -> dict:
         soup = Soup(explain, "html.parser")
-        answer, explain = soup.find_all("li")
+        explain_lines = soup.find_all("li")
+        answer = explain_lines[0]
+        explain = explain_lines[1:]
         return {
             "answer": answer.text,
-            "explain": explain.text,
+            "explain": "\n".join([expl.text for expl in explain]),
         }
 
     def parse(self, problem: str, raw: bool = False) -> str:
@@ -54,3 +56,6 @@ class Lender:
 
     def parse_all(self, raw: bool = False) -> list:
         return [self.parse(problem, raw) for problem in self.split_by_hr]
+
+    def hide_blockquote(self):
+        soup = Soup(self.split_by_hr, 'html.parser')
