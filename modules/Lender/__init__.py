@@ -82,8 +82,8 @@ class Lender:
         problem = quiz['problem']
         explain = quiz['explain']
         
-        title  = f"<h2>{problem['title']}</h2>"
-        detail = f"<h3>{problem['detail']}</h3>"
+        title  = f"<h4>{problem['title']}</h2>"
+        detail = f"<h4>{problem['detail']}</h3>"
 
         body = "<ul>"
         for line in problem['body']:
