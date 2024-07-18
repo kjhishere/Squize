@@ -4,33 +4,201 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Squize</title>
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.classless.min.css"
+        />
         <script src="https://unpkg.com/htmx.org@2.0.1"></script>
-        <style>
-            .htmx-indicator {
-                display: none;
+        <script>
+            function updateFormAction(tag, target) {
+                htmx.find(tag).setAttribute("hx-get", target);
+                htmx.process(tag);
             }
-            .htmx-request .htmx-indicator {
-                display: inline;
+            function enableOptions(selectElement) {
+                var unitSelect = document.querySelector('select[name="unit"]');
+                var keywordInput = document.querySelector(
+                    'input[name="keyword"]'
+                );
+
+                unitSelect.innerHTML =
+                    '<option selected disabled value="">단원을 선택하세요.</option>';
+
+                if (selectElement.value !== "") {
+                    unitSelect.removeAttribute("disabled");
+                    keywordInput.removeAttribute("disabled");
+
+                    if (selectElement.value === "물리학I") {
+                        updateFormAction(
+                            'form[hx-target="#problems"]',
+                            "/api/physics"
+                        );
+                        unitSelect.options.add(
+                            new Option("1. 역학과 에너지", "역학과 에너지")
+                        );
+                        unitSelect.options.add(
+                            new Option("2. 물질과 전자기장", "물질과 전자기장")
+                        );
+                        unitSelect.options.add(
+                            new Option("3. 파동과 정보통신", "파동과 정보통신")
+                        );
+                    } else if (selectElement.value === "화학I") {
+                        updateFormAction(
+                            'form[hx-target="#problems"]',
+                            "/api/chemistry"
+                        );
+                        unitSelect.options.add(
+                            new Option("1. 화학의 첫걸음", "화학의 첫걸음")
+                        );
+                        unitSelect.options.add(
+                            new Option("2. 원자의 세계", "원자의 세계")
+                        );
+                        unitSelect.options.add(
+                            new Option(
+                                "3. 화학 결합과 분자의 세계",
+                                "화학 결합과 분자의 세계"
+                            )
+                        );
+                        unitSelect.options.add(
+                            new Option(
+                                "4. 역동적인 화학 반응",
+                                "역동적인 화학 반응"
+                            )
+                        );
+                    } else if (selectElement.value === "생명과학I") {
+                        updateFormAction(
+                            'form[hx-target="#problems"]',
+                            "/api/biology"
+                        );
+                        unitSelect.options.add(
+                            new Option(
+                                "1. 생명 과학의 이해",
+                                "생명 과학의 이해"
+                            )
+                        );
+                        unitSelect.options.add(
+                            new Option("2. 사람의 물질대사", "사람의 물질대사")
+                        );
+                        unitSelect.options.add(
+                            new Option(
+                                "3. 항상성과 몸의 조절",
+                                "항상성과 몸의 조절"
+                            )
+                        );
+                        unitSelect.options.add(new Option("4. 유전", "유전"));
+                        unitSelect.options.add(
+                            new Option(
+                                "5. 생태계와 상호 작용",
+                                "생태계와 상호 작용"
+                            )
+                        );
+                    } else if (selectElement.value === "지구과학I") {
+                        updateFormAction(
+                            'form[hx-target="#problems"]',
+                            "/api/earth"
+                        );
+                        unitSelect.options.add(
+                            new Option("1. 지권의 변동", "지권의 변동")
+                        );
+                        unitSelect.options.add(
+                            new Option("2. 지구의 역사", "지구의 역사")
+                        );
+                        unitSelect.options.add(
+                            new Option(
+                                "3. 대기와 해양의 변화",
+                                "대기와 해양의 변화"
+                            )
+                        );
+                        unitSelect.options.add(
+                            new Option(
+                                "4. 대기와 해양의 상호작용",
+                                "대기와 해양의 상호작용"
+                            )
+                        );
+                        unitSelect.options.add(
+                            new Option(
+                                "5. 별과 외계 행성계",
+                                "별과 외계 행성계"
+                            )
+                        );
+                        unitSelect.options.add(
+                            new Option(
+                                "6. 외부 은하와 우주 팽창",
+                                "외부 은하와 우주 팽창"
+                            )
+                        );
+                    }
+                } else {
+                    unitSelect.setAttribute("disabled", "");
+                    keywordInput.setAttribute("disabled", "");
+                }
             }
-            .htmx-request.htmx-indicator {
-                display: inline;
-            }
-        </style>
+            document
+                .querySelector('form[hx-target="#problems"]')
+                .addEventListener("submit", function (event) {
+                    var form = event.target;
+                    var action = form.getAttribute("action");
+
+                    if (action && action.indexOf("?") === -1) {
+                        form.setAttribute("action", action + "?to_html=true");
+                    } else if (action) {
+                        form.setAttribute("action", action + "&to_html=true");
+                    }
+                });
+        </script>
     </head>
     <body>
-        <div>
-            <button
-                hx-get="/api/physics?unit=%EC%97%AD%ED%95%99%EA%B3%BC%20%EC%97%90%EB%84%88%EC%A7%80&keyword=%EC%97%AC%EB%9F%AC%20%EA%B0%80%EC%A7%80%20%EC%9A%B4%EB%8F%99&to_html=true"
-                hx-indicator="#indicator"
-            >
-                Click Me!
-            </button>
-            <img
-                id="indicator"
-                class="htmx-indicator"
-                src="/squize.jpg"
-                width="110px"
-            />
-        </div>
+        <header>
+            <hgroup>
+                <h1>Squize</h1>
+                <p></p>
+            </hgroup>
+        </header>
+        <main>
+            <section>
+                <h2>과목선택</h2>
+                <p>문제를 만들기 위해 과목과 단원, 키워드를 입력하세요.</p>
+                <form hx-get="/api" hx-target="#problems" hx-swap="innerHTML">
+                    <div>
+                        <select
+                            name="subject"
+                            aria-label="과목을 선택하세요."
+                            required
+                            onchange="enableOptions(this)"
+                        >
+                            <option selected disabled value="">
+                                과목을 선택하세요.
+                            </option>
+                            <option>물리학I</option>
+                            <option>화학I</option>
+                            <option>생명과학I</option>
+                            <option>지구과학I</option>
+                        </select>
+                        <select
+                            name="unit"
+                            aria-label="단원을 선택하세요."
+                            required
+                            disabled
+                        >
+                            <option selected disabled value="">
+                                단원을 선택하세요.
+                            </option>
+                        </select>
+                        <input
+                            type="text"
+                            name="keyword"
+                            placeholder="키워드 입력하기"
+                            aria-label="키워드 입력하기"
+                            required
+                            disabled
+                        />
+                        <button type="submit">생성</button>
+                    </div>
+                </form>
+            </section>
+            <section>
+                <hr />
+                <div id="problems"></div>
+            </section>
+        </main>
     </body>
 </html>
