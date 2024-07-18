@@ -30,7 +30,7 @@
                     if (selectElement.value === "물리학I") {
                         updateFormAction(
                             'form[hx-target="#problems"]',
-                            "/api/physics"
+                            "/htmx/physics"
                         );
                         unitSelect.options.add(
                             new Option("1. 역학과 에너지", "역학과 에너지")
@@ -44,7 +44,7 @@
                     } else if (selectElement.value === "화학I") {
                         updateFormAction(
                             'form[hx-target="#problems"]',
-                            "/api/chemistry"
+                            "/htmx/chemistry"
                         );
                         unitSelect.options.add(
                             new Option("1. 화학의 첫걸음", "화학의 첫걸음")
@@ -67,7 +67,7 @@
                     } else if (selectElement.value === "생명과학I") {
                         updateFormAction(
                             'form[hx-target="#problems"]',
-                            "/api/biology"
+                            "/htmx/biology"
                         );
                         unitSelect.options.add(
                             new Option(
@@ -94,7 +94,7 @@
                     } else if (selectElement.value === "지구과학I") {
                         updateFormAction(
                             'form[hx-target="#problems"]',
-                            "/api/earth"
+                            "/htmx/earth"
                         );
                         unitSelect.options.add(
                             new Option("1. 지권의 변동", "지권의 변동")
@@ -157,7 +157,7 @@
             <section>
                 <h2>과목선택</h2>
                 <p>문제를 만들기 위해 과목과 단원, 키워드를 입력하세요.</p>
-                <form hx-get="/api" hx-target="#problems" hx-swap="innerHTML">
+                <form hx-get="/htmx" hx-target="#problems" hx-swap="innerHTML">
                     <div>
                         <select
                             name="subject"
