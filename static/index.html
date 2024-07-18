@@ -4,6 +4,7 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Squize</title>
+        <link rel="icon" type="image/x-icon" href="/squize.jpg" />
         <link
             rel="stylesheet"
             href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.classless.min.css"
@@ -19,9 +20,12 @@
                 var keywordInput = document.querySelector(
                     'input[name="keyword"]'
                 );
+                var problemsDiv = document.querySelector("#problems");
 
                 unitSelect.innerHTML =
                     '<option selected disabled value="">단원을 선택하세요.</option>';
+                problemsDiv.innerHTML =
+                    '<div id="loading" class="htmx-indicator loading-indicator"></div>';
 
                 if (selectElement.value !== "") {
                     unitSelect.removeAttribute("disabled");
