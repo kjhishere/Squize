@@ -1,3 +1,5 @@
+import asyncio
+
 from fastapi import APIRouter, Request
 from fastapi.responses import PlainTextResponse
 
@@ -5,16 +7,13 @@ from modules import Physics, Chemistry, Biology, Earth
 from modules import Gemini, Lender
 
 
-htmx = APIRouter(
-	prefix="/htmx",
-    tags=["htmx"]
-)
+htmx = APIRouter(prefix="/htmx", tags=["htmx"])
 
 gemini = Gemini()
 
 
 async def get_answer(prompt: str) -> str:
-    response = gemini(prompt)
+    response = await asyncio.to_thread(gemini(prompt))
     lender = Lender(response)
     parsed = lender.parse_all()
 

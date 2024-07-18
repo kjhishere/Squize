@@ -1,19 +1,18 @@
+import asyncio
+
 from fastapi import APIRouter, Request
 
 from modules import Physics, Chemistry, Biology, Earth
 from modules import Gemini, Lender
 
 
-api = APIRouter(
-	prefix="/api",
-    tags=["API"]
-)
+api = APIRouter(prefix="/api", tags=["API"])
 
 gemini = Gemini()
 
 
 async def get_answer(prompt: str) -> dict:
-    response = gemini(prompt)
+    response = await asyncio.to_thread(gemini(prompt))
     lender = Lender(response)
     parsed = lender.parse_all()
 
