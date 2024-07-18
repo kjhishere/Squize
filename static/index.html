@@ -10,6 +10,40 @@
             href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.classless.min.css"
         />
         <script src="https://unpkg.com/htmx.org@2.0.1"></script>
+        <script
+            id="MathJax-script"
+            async
+            src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+        ></script>
+        <script type="text/javascript">
+            MathJax = {
+                tex: {
+                    inlineMath: [
+                        ["$", "$"],
+                        ["\\(", "\\)"],
+                    ],
+                    displayMath: [
+                        ["$$", "$$"],
+                        ["\\[", "\\]"],
+                    ],
+                    processEscapes: true,
+                    autoload: {
+                        color: [],
+                        colorV2: ["color"],
+                    },
+                },
+                options: {
+                    skipHtmlTags: [
+                        "script",
+                        "noscript",
+                        "style",
+                        "textarea",
+                        "pre",
+                    ],
+                },
+            };
+        </script>
+
         <script>
             function updateFormAction(tag, target) {
                 htmx.find(tag).setAttribute("hx-get", target);
@@ -223,5 +257,17 @@
                 </div>
             </section>
         </main>
+        <script type="text/javascript">
+            function updateMathJax() {
+                if (typeof MathJax !== "undefined") {
+                    MathJax.typesetPromise([
+                        document.getElementById("problems"),
+                    ]);
+                }
+            }
+            document.addEventListener("htmx:afterRequest", function (evt) {
+                updateMathJax();
+            });
+        </script>
     </body>
 </html>
