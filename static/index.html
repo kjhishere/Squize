@@ -143,6 +143,8 @@
               <option>화학I</option>
               <option>생명과학I</option>
               <option>지구과학I</option>
+              <option>한국사</option>
+              <option>회계원리</option>
             </select>
             <select
               name="unit"
@@ -251,6 +253,44 @@
             );
             unitSelect.options.add(
               new Option("6. 외부 은하와 우주 팽창", "외부 은하와 우주 팽창")
+            );
+          } else if (selectElement.value === "회계원리") {
+            updateFormAction('form[hx-target="#problems"]', "/htmx/accounting");
+            unitSelect.options.add(
+              new Option("1. 회계의 기초 개념", "회계의 기초 개념")
+            );
+            unitSelect.options.add(
+              new Option("2. 자산의 회계 처리", "자산의 회계 처리")
+            );
+            unitSelect.options.add(
+              new Option("3. 부채·자본의 회계 처리", "부채·자본의 회계 처리")
+            );
+            unitSelect.options.add(
+              new Option(
+                "4. 수익과 비용의 회계 처리",
+                "수익과 비용의 회계 처리"
+              )
+            );
+            unitSelect.options.add(new Option("5. 결산", "결산"));
+          } else if (selectElement.value === "한국사") {
+            updateFormAction('form[hx-target="#problems"]', "/htmx/history");
+            unitSelect.options.add(
+              new Option("1. 전근대 한국사의 이해", "전근대 한국사의 이해")
+            );
+            unitSelect.options.add(
+              new Option(
+                "2. 근대 국민 국가 수립 운동",
+                "근대 국민 국가 수립 운동"
+              )
+            );
+            unitSelect.options.add(
+              new Option(
+                "3. 일제 식민지 지배와 민족 운동의 전개",
+                "일제 식민지 지배와 민족 운동의 전개"
+              )
+            );
+            unitSelect.options.add(
+              new Option("4. 대한민국의 발전", "대한민국의 발전")
             );
           }
         } else {
