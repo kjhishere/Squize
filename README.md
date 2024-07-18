@@ -1,5 +1,5 @@
 <div align="center">
-<a href="https://./">
+<a href="./">
 	<h1>Squize</h1>
 </a>
 

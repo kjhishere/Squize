@@ -1,273 +1,289 @@
 <!DOCTYPE html>
 <html lang="ko">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Squize</title>
-        <link rel="icon" type="image/x-icon" href="/squize.jpg" />
-        <link
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.classless.min.css"
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Squize</title>
+    <link rel="icon" type="image/x-icon" href="/squize.png" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.classless.min.css"
+    />
+    <script src="https://unpkg.com/htmx.org@2.0.1"></script>
+    <script
+      id="MathJax-script"
+      async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+    ></script>
+    <script type="text/javascript">
+      MathJax = {
+        tex: {
+          inlineMath: [
+            ["$", "$"],
+            ["\\(", "\\)"],
+          ],
+          displayMath: [
+            ["$$", "$$"],
+            ["\\[", "\\]"],
+          ],
+          processEscapes: true,
+          autoload: {
+            color: [],
+            colorV2: ["color"],
+          },
+        },
+        options: {
+          skipHtmlTags: ["script", "noscript", "style", "textarea", "pre"],
+        },
+      };
+    </script>
+    <style>
+      .loading-indicator {
+        width: 50px;
+        height: 50px;
+        border: 3px solid rgba(0, 0, 0, 0.3);
+        border-radius: 50%;
+        border-top-color: #3498db;
+        animation: spin 1s ease-in-out infinite;
+        transform: translate(-50%, -50%);
+        margin: 0 auto;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+      .headerList {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        float: right;
+        justify-content: flex-end;
+        margin: 0.2rem 0 0;
+        position: relative;
+      }
+      .headerList li {
+        list-style: none;
+      }
+      .headerList .item {
+        background-color: var(--color-background);
+        height: 55px;
+        width: 55px;
+        fill: var(--color-button-active);
+      }
+      .headerList .icon {
+        display: inline-block;
+        height: 100%;
+        outline: none;
+        padding: 10px;
+        width: 100%;
+        fill: var(--color-button-active);
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <hgroup>
+        <img
+          src="/squize.jpg"
+          width="75px"
+          style="border-radius: 25%; float: left; margin-right: 20px"
         />
-        <script src="https://unpkg.com/htmx.org@2.0.1"></script>
-        <script
-            id="MathJax-script"
-            async
-            src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
-        ></script>
-        <script type="text/javascript">
-            MathJax = {
-                tex: {
-                    inlineMath: [
-                        ["$", "$"],
-                        ["\\(", "\\)"],
-                    ],
-                    displayMath: [
-                        ["$$", "$$"],
-                        ["\\[", "\\]"],
-                    ],
-                    processEscapes: true,
-                    autoload: {
-                        color: [],
-                        colorV2: ["color"],
-                    },
-                },
-                options: {
-                    skipHtmlTags: [
-                        "script",
-                        "noscript",
-                        "style",
-                        "textarea",
-                        "pre",
-                    ],
-                },
-            };
-        </script>
+        <h1><b>SQUIZE</b></h1>
+        <p><b>Squize</b>는 AI를 활용한 문제 생성기입니다.</p>
+        <ul class="headerList">
+          <li class="item">
+            <a
+              class="icon"
+              title="Github Repository"
+              href="https://github.com/kjhishere/Squize"
+              ><svg role="img" viewBox="0 0 24 24">
+                <path
+                  d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"
+                ></path></svg
+            ></a>
+          </li>
+          <li class="item">
+            <a
+              class="icon"
+              title="Forgejo Repository"
+              href="https://saykcay.dev/ark/kjhishere/Squize"
+              ><svg role="img" viewBox="0 0 24 24">
+                <path
+                  d="M16.7773 0c1.6018 0 2.9004 1.2986 2.9004 2.9005s-1.2986 2.9004-2.9004 2.9004c-1.0854 0-2.0315-.596-2.5288-1.4787H12.91c-2.3322 0-4.2272 1.8718-4.2649 4.195l-.0007 2.1175a7.0759 7.0759 0 0 1 4.148-1.4205l.1176-.001 1.3385.0002c.4973-.8827 1.4434-1.4788 2.5288-1.4788 1.6018 0 2.9004 1.2986 2.9004 2.9005s-1.2986 2.9004-2.9004 2.9004c-1.0854 0-2.0315-.596-2.5288-1.4787H12.91c-2.3322 0-4.2272 1.8718-4.2649 4.195l-.0007 2.319c.8827.4973 1.4788 1.4434 1.4788 2.5287 0 1.602-1.2986 2.9005-2.9005 2.9005-1.6018 0-2.9004-1.2986-2.9004-2.9005 0-1.0853.596-2.0314 1.4788-2.5287l-.0002-9.9831c0-3.887 3.1195-7.0453 6.9915-7.108l.1176-.001h1.3385C14.7458.5962 15.692 0 16.7773 0ZM7.2227 19.9052c-.6596 0-1.1943.5347-1.1943 1.1943s.5347 1.1943 1.1943 1.1943 1.1944-.5347 1.1944-1.1943-.5348-1.1943-1.1944-1.1943Zm9.5546-10.4644c-.6596 0-1.1944.5347-1.1944 1.1943s.5348 1.1943 1.1944 1.1943c.6596 0 1.1943-.5347 1.1943-1.1943s-.5347-1.1943-1.1943-1.1943Zm0-7.7346c-.6596 0-1.1944.5347-1.1944 1.1943s.5348 1.1943 1.1944 1.1943c.6596 0 1.1943-.5347 1.1943-1.1943s-.5347-1.1943-1.1943-1.1943Z"
+                /></svg
+            ></a>
+          </li>
+        </ul>
+      </hgroup>
+    </header>
+    <main>
+      <section>
+        <h2>과목선택</h2>
+        <p>문제를 만들기 위해 과목과 단원, 키워드를 입력하세요.</p>
+        <form
+          hx-get="/htmx"
+          hx-target="#problems"
+          hx-swap="innerHTML"
+          hx-indicator="#loading"
+        >
+          <div>
+            <select
+              name="subject"
+              aria-label="과목을 선택하세요."
+              required
+              onchange="updateOptions(this)"
+            >
+              <option selected disabled value="">과목을 선택하세요.</option>
+              <option>물리학I</option>
+              <option>화학I</option>
+              <option>생명과학I</option>
+              <option>지구과학I</option>
+            </select>
+            <select
+              name="unit"
+              aria-label="단원을 선택하세요."
+              required
+              disabled
+            >
+              <option selected disabled value="">단원을 선택하세요.</option>
+            </select>
+            <input
+              type="text"
+              name="keyword"
+              placeholder="키워드 입력하기"
+              aria-label="키워드 입력하기"
+              required
+              disabled
+            />
+            <button type="submit">생성</button>
+          </div>
+        </form>
+      </section>
+      <section>
+        <hr />
+        <div id="problems"></div>
+      </section>
+    </main>
+    <script type="text/javascript">
+      function updateFormAction(tag, target) {
+        htmx.find(tag).setAttribute("hx-get", target);
+        htmx.process(tag);
+      }
+      function initProblems() {
+        var problemsDiv = document.querySelector("#problems");
+        problemsDiv.innerHTML =
+          '<div id="loading" class="htmx-indicator loading-indicator"></div>';
+      }
+      function updateMathJax() {
+        if (typeof MathJax !== "undefined") {
+          MathJax.typesetPromise([document.getElementById("problems")]);
+        }
+      }
+      function updateOptions(selectElement) {
+        var unitSelect = document.querySelector('select[name="unit"]');
+        var keywordInput = document.querySelector('input[name="keyword"]');
 
-        <script>
-            function updateFormAction(tag, target) {
-                htmx.find(tag).setAttribute("hx-get", target);
-                htmx.process(tag);
-            }
-            function enableOptions(selectElement) {
-                var unitSelect = document.querySelector('select[name="unit"]');
-                var keywordInput = document.querySelector(
-                    'input[name="keyword"]'
-                );
-                var problemsDiv = document.querySelector("#problems");
+        unitSelect.innerHTML =
+          '<option selected disabled value="">단원을 선택하세요.</option>';
 
-                unitSelect.innerHTML =
-                    '<option selected disabled value="">단원을 선택하세요.</option>';
-                problemsDiv.innerHTML =
-                    '<div id="loading" class="htmx-indicator loading-indicator"></div>';
+        if (selectElement.value !== "") {
+          unitSelect.removeAttribute("disabled");
+          keywordInput.removeAttribute("disabled");
 
-                if (selectElement.value !== "") {
-                    unitSelect.removeAttribute("disabled");
-                    keywordInput.removeAttribute("disabled");
+          if (selectElement.value === "물리학I") {
+            updateFormAction('form[hx-target="#problems"]', "/htmx/physics");
+            unitSelect.options.add(
+              new Option("1. 역학과 에너지", "역학과 에너지")
+            );
+            unitSelect.options.add(
+              new Option("2. 물질과 전자기장", "물질과 전자기장")
+            );
+            unitSelect.options.add(
+              new Option("3. 파동과 정보통신", "파동과 정보통신")
+            );
+          } else if (selectElement.value === "화학I") {
+            updateFormAction('form[hx-target="#problems"]', "/htmx/chemistry");
+            unitSelect.options.add(
+              new Option("1. 화학의 첫걸음", "화학의 첫걸음")
+            );
+            unitSelect.options.add(new Option("2. 원자의 세계", "원자의 세계"));
+            unitSelect.options.add(
+              new Option(
+                "3. 화학 결합과 분자의 세계",
+                "화학 결합과 분자의 세계"
+              )
+            );
+            unitSelect.options.add(
+              new Option("4. 역동적인 화학 반응", "역동적인 화학 반응")
+            );
+          } else if (selectElement.value === "생명과학I") {
+            updateFormAction('form[hx-target="#problems"]', "/htmx/biology");
+            unitSelect.options.add(
+              new Option("1. 생명 과학의 이해", "생명 과학의 이해")
+            );
+            unitSelect.options.add(
+              new Option("2. 사람의 물질대사", "사람의 물질대사")
+            );
+            unitSelect.options.add(
+              new Option("3. 항상성과 몸의 조절", "항상성과 몸의 조절")
+            );
+            unitSelect.options.add(new Option("4. 유전", "유전"));
+            unitSelect.options.add(
+              new Option("5. 생태계와 상호 작용", "생태계와 상호 작용")
+            );
+          } else if (selectElement.value === "지구과학I") {
+            updateFormAction('form[hx-target="#problems"]', "/htmx/earth");
+            unitSelect.options.add(new Option("1. 지권의 변동", "지권의 변동"));
+            unitSelect.options.add(new Option("2. 지구의 역사", "지구의 역사"));
+            unitSelect.options.add(
+              new Option("3. 대기와 해양의 변화", "대기와 해양의 변화")
+            );
+            unitSelect.options.add(
+              new Option("4. 대기와 해양의 상호작용", "대기와 해양의 상호작용")
+            );
+            unitSelect.options.add(
+              new Option("5. 별과 외계 행성계", "별과 외계 행성계")
+            );
+            unitSelect.options.add(
+              new Option("6. 외부 은하와 우주 팽창", "외부 은하와 우주 팽창")
+            );
+          }
+        } else {
+          unitSelect.setAttribute("disabled", "");
+          keywordInput.setAttribute("disabled", "");
+        }
+      }
+      function swtichOptions(condition) {
+        var subjectSelect = document.querySelector('select[name="subject"]');
+        var unitSelect = document.querySelector('select[name="unit"]');
+        var keywordInput = document.querySelector('input[name="keyword"]');
+        var submitButton = document.querySelector('button[type="submit"]');
 
-                    if (selectElement.value === "물리학I") {
-                        updateFormAction(
-                            'form[hx-target="#problems"]',
-                            "/htmx/physics"
-                        );
-                        unitSelect.options.add(
-                            new Option("1. 역학과 에너지", "역학과 에너지")
-                        );
-                        unitSelect.options.add(
-                            new Option("2. 물질과 전자기장", "물질과 전자기장")
-                        );
-                        unitSelect.options.add(
-                            new Option("3. 파동과 정보통신", "파동과 정보통신")
-                        );
-                    } else if (selectElement.value === "화학I") {
-                        updateFormAction(
-                            'form[hx-target="#problems"]',
-                            "/htmx/chemistry"
-                        );
-                        unitSelect.options.add(
-                            new Option("1. 화학의 첫걸음", "화학의 첫걸음")
-                        );
-                        unitSelect.options.add(
-                            new Option("2. 원자의 세계", "원자의 세계")
-                        );
-                        unitSelect.options.add(
-                            new Option(
-                                "3. 화학 결합과 분자의 세계",
-                                "화학 결합과 분자의 세계"
-                            )
-                        );
-                        unitSelect.options.add(
-                            new Option(
-                                "4. 역동적인 화학 반응",
-                                "역동적인 화학 반응"
-                            )
-                        );
-                    } else if (selectElement.value === "생명과학I") {
-                        updateFormAction(
-                            'form[hx-target="#problems"]',
-                            "/htmx/biology"
-                        );
-                        unitSelect.options.add(
-                            new Option(
-                                "1. 생명 과학의 이해",
-                                "생명 과학의 이해"
-                            )
-                        );
-                        unitSelect.options.add(
-                            new Option("2. 사람의 물질대사", "사람의 물질대사")
-                        );
-                        unitSelect.options.add(
-                            new Option(
-                                "3. 항상성과 몸의 조절",
-                                "항상성과 몸의 조절"
-                            )
-                        );
-                        unitSelect.options.add(new Option("4. 유전", "유전"));
-                        unitSelect.options.add(
-                            new Option(
-                                "5. 생태계와 상호 작용",
-                                "생태계와 상호 작용"
-                            )
-                        );
-                    } else if (selectElement.value === "지구과학I") {
-                        updateFormAction(
-                            'form[hx-target="#problems"]',
-                            "/htmx/earth"
-                        );
-                        unitSelect.options.add(
-                            new Option("1. 지권의 변동", "지권의 변동")
-                        );
-                        unitSelect.options.add(
-                            new Option("2. 지구의 역사", "지구의 역사")
-                        );
-                        unitSelect.options.add(
-                            new Option(
-                                "3. 대기와 해양의 변화",
-                                "대기와 해양의 변화"
-                            )
-                        );
-                        unitSelect.options.add(
-                            new Option(
-                                "4. 대기와 해양의 상호작용",
-                                "대기와 해양의 상호작용"
-                            )
-                        );
-                        unitSelect.options.add(
-                            new Option(
-                                "5. 별과 외계 행성계",
-                                "별과 외계 행성계"
-                            )
-                        );
-                        unitSelect.options.add(
-                            new Option(
-                                "6. 외부 은하와 우주 팽창",
-                                "외부 은하와 우주 팽창"
-                            )
-                        );
-                    }
-                } else {
-                    unitSelect.setAttribute("disabled", "");
-                    keywordInput.setAttribute("disabled", "");
-                }
-            }
-        </script>
-        <style>
-            .loading-indicator {
-                width: 50px;
-                height: 50px;
-                border: 3px solid rgba(0, 0, 0, 0.3);
-                border-radius: 50%;
-                border-top-color: #3498db;
-                animation: spin 1s ease-in-out infinite;
-                transform: translate(-50%, -50%);
-                margin: 0 auto;
-            }
-
-            @keyframes spin {
-                0% {
-                    transform: rotate(0deg);
-                }
-                100% {
-                    transform: rotate(360deg);
-                }
-            }
-        </style>
-    </head>
-    <body>
-        <header>
-            <hgroup>
-                <h1>Squize</h1>
-                <p></p>
-            </hgroup>
-        </header>
-        <main>
-            <section>
-                <h2>과목선택</h2>
-                <p>문제를 만들기 위해 과목과 단원, 키워드를 입력하세요.</p>
-                <form
-                    hx-get="/htmx"
-                    hx-target="#problems"
-                    hx-swap="innerHTML"
-                    hx-indicator="#loading"
-                >
-                    <div>
-                        <select
-                            name="subject"
-                            aria-label="과목을 선택하세요."
-                            required
-                            onchange="enableOptions(this)"
-                        >
-                            <option selected disabled value="">
-                                과목을 선택하세요.
-                            </option>
-                            <option>물리학I</option>
-                            <option>화학I</option>
-                            <option>생명과학I</option>
-                            <option>지구과학I</option>
-                        </select>
-                        <select
-                            name="unit"
-                            aria-label="단원을 선택하세요."
-                            required
-                            disabled
-                        >
-                            <option selected disabled value="">
-                                단원을 선택하세요.
-                            </option>
-                        </select>
-                        <input
-                            type="text"
-                            name="keyword"
-                            placeholder="키워드 입력하기"
-                            aria-label="키워드 입력하기"
-                            required
-                            disabled
-                        />
-                        <button type="submit">생성</button>
-                    </div>
-                </form>
-            </section>
-            <section>
-                <hr />
-                <div id="problems">
-                    <div
-                        id="loading"
-                        class="htmx-indicator loading-indicator"
-                    ></div>
-                </div>
-            </section>
-        </main>
-        <script type="text/javascript">
-            function updateMathJax() {
-                if (typeof MathJax !== "undefined") {
-                    MathJax.typesetPromise([
-                        document.getElementById("problems"),
-                    ]);
-                }
-            }
-            document.addEventListener("htmx:afterRequest", function (evt) {
-                updateMathJax();
-            });
-        </script>
-    </body>
+        if (condition) {
+          subjectSelect.removeAttribute("disabled");
+          unitSelect.removeAttribute("disabled");
+          keywordInput.removeAttribute("disabled");
+          submitButton.removeAttribute("disabled");
+        } else {
+          subjectSelect.setAttribute("disabled", "");
+          unitSelect.setAttribute("disabled", "");
+          keywordInput.setAttribute("disabled", "");
+          submitButton.setAttribute("disabled", "");
+        }
+      }
+      document.addEventListener("htmx:beforeRequest", function (evt) {
+        initProblems();
+        swtichOptions(false);
+      });
+      document.addEventListener("htmx:afterRequest", function (evt) {
+        updateMathJax();
+        swtichOptions(true);
+      });
+    </script>
+  </body>
 </html>
