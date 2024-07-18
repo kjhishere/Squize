@@ -132,19 +132,28 @@
                     keywordInput.setAttribute("disabled", "");
                 }
             }
-            document
-                .querySelector('form[hx-target="#problems"]')
-                .addEventListener("submit", function (event) {
-                    var form = event.target;
-                    var action = form.getAttribute("action");
-
-                    if (action && action.indexOf("?") === -1) {
-                        form.setAttribute("action", action + "?to_html=true");
-                    } else if (action) {
-                        form.setAttribute("action", action + "&to_html=true");
-                    }
-                });
         </script>
+        <style>
+            .loading-indicator {
+                width: 50px;
+                height: 50px;
+                border: 3px solid rgba(0, 0, 0, 0.3);
+                border-radius: 50%;
+                border-top-color: #3498db;
+                animation: spin 1s ease-in-out infinite;
+                transform: translate(-50%, -50%);
+                margin: 0 auto;
+            }
+
+            @keyframes spin {
+                0% {
+                    transform: rotate(0deg);
+                }
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
+        </style>
     </head>
     <body>
         <header>
@@ -157,7 +166,12 @@
             <section>
                 <h2>과목선택</h2>
                 <p>문제를 만들기 위해 과목과 단원, 키워드를 입력하세요.</p>
-                <form hx-get="/htmx" hx-target="#problems" hx-swap="innerHTML">
+                <form
+                    hx-get="/htmx"
+                    hx-target="#problems"
+                    hx-swap="innerHTML"
+                    hx-indicator="#loading"
+                >
                     <div>
                         <select
                             name="subject"
@@ -197,7 +211,12 @@
             </section>
             <section>
                 <hr />
-                <div id="problems"></div>
+                <div id="problems">
+                    <div
+                        id="loading"
+                        class="htmx-indicator loading-indicator"
+                    ></div>
+                </div>
             </section>
         </main>
     </body>
