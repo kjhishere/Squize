@@ -18,18 +18,23 @@ app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 gemini = Gemini()
 
 
-async def get_answer(prompt: str) -> dict:
+async def get_answer(prompt: str, to_html: bool) -> Union[dict, str]:
     response = gemini(prompt)
     lender = Lender(response)
+    parsed = lender.parse_all()
 
-    return lender.parse_all()
+    if to_html:
+        parsed_list = [Lender.to_html(parse) for parse in parsed]
+        return "<hr>".join(parsed_list)
+    else:
+        return parsed
 
 
 @app.get("/api/physics")
 @limiter.limit("1/minute")
-async def physics(request: Request, unit: str, keyword: str):
+async def physics(request: Request, unit: str, keyword: str, to_html: bool = False):
     physics_prompt = Physics()
-    return await get_answer(physics_prompt(unit, keyword))
+    return await get_answer(physics_prompt(unit, keyword), to_html)
 
 
 @app.get("/api/chemistry")

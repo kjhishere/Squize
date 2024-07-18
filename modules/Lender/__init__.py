@@ -39,7 +39,7 @@ class Lender:
             "detail": detail,
             "body": [body.text for body in soup.find_all('p')],
             "choices": [
-                f"{idx + 1}. {li.text}" for idx, li in enumerate(soup.find_all("li"))
+                li.text for li in soup.find_all("li")
             ],
         }
 
@@ -55,6 +55,7 @@ class Lender:
 
     def parse(self, problem: str, raw: bool = False) -> str:
         soup = Soup(problem, "html.parser")
+        print(str(soup))
 
         blockquote = soup.find("blockquote")
         if raw:
@@ -76,5 +77,33 @@ class Lender:
     def parse_all(self, raw: bool = False) -> list:
         return [self.parse(problem, raw) for problem in self.split_by_hr]
 
-    def hide_blockquote(self):
-        soup = Soup(self.split_by_hr, 'html.parser')
+    @staticmethod
+    def to_html(quiz: dict):
+        problem = quiz['problem']
+        explain = quiz['explain']
+        
+        title  = f"<h2>{problem['title']}</h2>"
+        detail = f"<h3>{problem['detail']}</h3>"
+
+        body = "<ul>"
+        for line in problem['body']:
+            body += f"<li>{line}</li>"
+        body += "</ul>"
+        
+        choices = "<ol>"
+        for line in problem['choices']:
+            choices += f"<li>{line}</li>"
+        choices += "</ol>"
+        
+        answer  = "<details><summary>정답 및 해설</summary>"
+        answer += f"<span>{explain['answer']}</span><br>"
+        answer += f"<span>{explain['explain']}</span>"
+        answer += "</details>"
+        
+        return (
+            title + \
+            detail + \
+            body + \
+            choices + \
+            answer
+        )
