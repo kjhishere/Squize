@@ -8,7 +8,6 @@ from slowapi.util import get_remote_address
 from routers.api import api
 from routers.htmx import htmx
 
-
 limiter = Limiter(key_func=get_remote_address, application_limits=["1/minute"])
 app = FastAPI()
 app.state.limiter = limiter

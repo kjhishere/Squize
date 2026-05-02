@@ -1,16 +1,22 @@
 import os
-import google.generativeai as genai
+import dotenv
+
+from google import genai
 
 
 class Gemini:
+
     def __init__(
         self,
-        MODEL: str = "gemini-1.5-flash",
-        APIKEY: str = os.environ["GOOGLE_API_KEY"],
+        model: str = "gemini-3.1-flash-lite-preview",
+        api_key: str = dotenv.get_key(".env", "GOOGLE_API_KEY") or os.environ["GOOGLE_API_KEY"],
     ) -> None:
-        genai.configure(api_key=APIKEY)
-        self.model = genai.GenerativeModel(model_name=MODEL)
+        self.client = genai.Client(api_key=api_key)
+        self.model = model
 
     def __call__(self, prompt: str) -> str:
-        response = self.model.generate_content(prompt)
+        response = self.client.models.generate_content(
+            model=self.model,
+            contents=prompt,
+        )
         return response.text
